@@ -1,0 +1,52 @@
+												DINING PHILOSOPHERS PROBLEM 
+
+
+ADAVNCE AND ROBOT PROGRAMMING
+Programmer: Celesti Gladys (5054512) ,Elham Mohammadi (5073904) ,Tahmineh tabarestani (5065743)
+M.Sc Robotics Engineering
+University of Genoa (UniGe)
+Group: CET
+Supervisor: Prof. Renato Ugo Raffaele Zaccaria & Prof. Simone Macciò
+
+
+The Dining Philosophers problem states that there are 5 philosophers sharing a circular table and they eat and think alternatively. There is a bowl of rice for each of the philosophers and 5 chopsticks. A philosopher needs both their right and left chopstick to eat. A hungry philosopher may only eat if there are both chopsticks available.Otherwise a philosopher puts down their chopstick and begin thinking again.
+
+The dining philosopher is a classic synchronization problem as it demonstrates a large class of concurrency control problems. (source from https://www.tutorialspoint.com/dining-philosophers-problem-dpp)
+
+################################################################################ WROKING OF THE DINING PHILOSOPHERS PROBLEM ############################################################################
+
+1. Five philosophers are in a thinking - eating cycle.
+2. When a philosopher gets hungry, he sits down, picks up his left and then his right chopsticks, and eats.
+3. A philosopher can eat only if he has both chopsticks.
+3. After eating, he puts down both chopsticks and thinks.
+
+"This cycle continues".
+
+########################################################################################## DESCRIPTION OF OUR CODE #####################################################################################
+
+There is a problem with 5 processes, one per philosopher. Each philosopher's code is endless cycling, with randomly variable period (random "eating" time).
+A further process stores, using shared memory, the 5 forks.
+Each philosopher prints on the screen what is doing. The same is done for the forks status.
+
+Dining Philosophers: Deadlock!
+
+■ If all five philosophers sit down and pick up their left chopsticks at the same time, this causes a circular waiting and the program deadlocks.
+
+How does deadlock occur in dining philosophers problem?
+
+Deadlock could occur if every philosopher holds a left chopstick and waits perpetually for a right chopstick (or vice versa). Originally used as a means of illustrating the problem of deadlock, this system reaches deadlock when there is a 'cycle of unwarranted requests'.
+
+##################################################################################### HOW WE AVOIDED DEADLOCK IN OUR CASE ##############################################################################
+
+Strategy: 
+
+1. Every philosopher must request each of their (shared) chopsticks from a waiter, who may refuse the request at first in order to avoid a deadlock. 
+2. For convenience, we assume that all philosophers request their left chopstick first, then their right chopstick.
+3. The waiter always provides chopsticks upon request unless only one chopstick remains unused. In that case, the waiter honors the request only if a right chopstick is requested; requests for a left chopstick are deferred until another philosopher finishes eating.
+
+Argument for correct deadlock avoidance: The last chopstick will only be assigned if the waiter is certain that at least one philosopher can finish eating (thereupon releasing chopsticks). Therefore, the "circular wait" required for deadlock can't occur.
+
+No starvation; fairness (depending on your waiter); degree of concurrency...
+
+Downside: Scalability (the waiter could become a bottleneck if the number of processors is large).
+
